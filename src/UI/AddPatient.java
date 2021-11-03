@@ -96,7 +96,7 @@ public class AddPatient extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(patienttbt);
 
-        jButton1.setText("Add Person to Patient");
+        jButton1.setText("View Person details");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -354,14 +354,13 @@ public class AddPatient extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+        //String patientid = txt_patientID.getText();
         int selectedRowIndex = patienttbt.getSelectedRow();
-        
         if(selectedRowIndex < 0){
             JOptionPane.showMessageDialog(this,"Please Select a row to add person to Patient list");
         }
-        
-        else{
+        else
+        {
             DefaultTableModel modelPat = (DefaultTableModel)patienttbt.getModel();
             cars selectedcars = (cars)modelPat.getValueAt(selectedRowIndex, 0);
             
@@ -374,10 +373,29 @@ public class AddPatient extends javax.swing.JPanel {
             txt_gender.setText(selectedcars.getGender());
             txt_city.setText(selectedcars.getCity());
         }
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void addPatientbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPatientbtnActionPerformed
         // TODO add your handling code here:
+        String patientid = txt_patientID.getText();
+        int selectedRowIndex = patienttbt.getSelectedRow();
+        if(selectedRowIndex < 0){
+            JOptionPane.showMessageDialog(this,"Please Select a row to add person to Patient list");
+        }
+        if(txt_medical_record_no.getText().length()<=0 || txt_diabetic.getText().length()<=0){
+            JOptionPane.showMessageDialog(this,"Values needed to be inserted!");
+            return;
+        }
+        else{
+            for(patient p: PatientHistory.getPatienthistory()){
+                if(p.getPatientID().contains(patientid)){
+                    JOptionPane.showMessageDialog(this, "Patient already exists!");
+                    return;
+                }
+            }
+        }
         String patientId = txt_patientID.getText();
         String medical_record = txt_medical_record_no.getText();
         String diabetic = txt_diabetic.getText();
@@ -390,8 +408,8 @@ public class AddPatient extends javax.swing.JPanel {
         
         JOptionPane.showMessageDialog(this, "Record has been saved!");
         
-        txt_medical_record_no.setText("");
-        txt_diabetic.setText("");
+//        txt_medical_record_no.setText("");
+//        txt_diabetic.setText("");
     }//GEN-LAST:event_addPatientbtnActionPerformed
     public void populateTable(){
         DefaultTableModel modelPer = (DefaultTableModel)patienttbt.getModel();

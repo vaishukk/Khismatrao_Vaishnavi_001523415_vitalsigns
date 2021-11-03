@@ -362,7 +362,7 @@ public class CreatePanel extends javax.swing.JPanel {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
 
-       
+       String PersonID = txt_PERSONID.getText();
         if (checkbox_no.isSelected()){
                 gender= checkbox_no.getText();
         }               
@@ -372,8 +372,17 @@ public class CreatePanel extends javax.swing.JPanel {
         else if (checkbox_other.isSelected()) {
             gender= checkbox_other.getText();
         } 
+        
+        for (cars c : data.getData()){
+            if(c.getPersonID().contains(PersonID)){
+                JOptionPane.showMessageDialog(this,"Person already exists. Please enter another person details");
+                  return;
+            }
+            else
+                break;
+        }
 
-        if ( txtname .getText().length()<=0 || txthouse.getText().length()<=0 ||  txtage.getText().length()<=0 || txt_city.getText().length()<=0 || txt_PERSONID.getText().length()<0)
+        if ( txt_PERSONID.getText().length()<=0|| txt_city.getText().length()<=0|| txtname .getText().length()<=0 || txthouse.getText().length()<=0 ||  txtage.getText().length()<=0 || txt_city.getText().length()<=0 || txt_PERSONID.getText().length()<0)
         {
             JOptionPane.showMessageDialog(this,"One of more field are empty");
 
